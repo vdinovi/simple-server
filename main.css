@@ -1,0 +1,32 @@
+div {
+    height: 200;
+    width: 200;
+    border: 1px solid black;
+    vertical-align: top;
+    text-align: center;
+    display: inline-block;
+    background-color: lightblue;
+    font-family: Arial;
+}
+
+input {
+    display: block;
+    margin-left: 10px;
+    padding: 4px;
+}
+
+button {
+    display: inline-block;
+}
+
+table, th, td {
+    border: 1px solid black;     
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 5px;
+}
