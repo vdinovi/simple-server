@@ -10,12 +10,20 @@ div {
 }
 
 input {
+    border: 1px solid black;
     display: block;
-    margin-left: 10px;
+    width: 150px;
+    margin-left: 25px;
     padding: 4px;
 }
 
+#submit { 
+    width: 100px;
+    margin-left:4px;
+}
+
 button {
+    width: 54px;
     display: inline-block;
 }
 

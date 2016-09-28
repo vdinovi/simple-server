@@ -1,1 +1,1 @@
-A simple LAMP stack server for learning purposes.
+A simple LAMP-stack server for learning purposes.

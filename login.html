@@ -9,7 +9,7 @@
                 var table = "<tr><th>Name</th><th>Email</th></tr>";
                 jQuery.ajax({
                     type:"GET",
-                    url:'update.php',
+                    url:'cgi-bin/update.php',
                     dataType:'json',
                     success: function(obj) {
                         for (var key in obj) {
@@ -25,7 +25,7 @@
                     console.log(password);
                     jQuery.ajax({
                         type:"POST",
-                        url:'clear.php',
+                        url:'cgi-bin/clear.php',
                         dataType:'text',
                         data: password,
                         success: function (obj) {
@@ -43,12 +43,12 @@
     </head>
     <body onload="updateTable();">
     	<div id="signin">
-		<form action="entry.php" method="post">
+		<form action="cgi-bin/entry.php" method="post">
 			Name:<br>
 			<input type="text" name="name"/><br>
 			Email:<br>
 			<input type="text" name="email"/><br>
-			<input type="submit" style="display:inline-block";/>
+			<input id="submit" type="submit" style="display:inline-block";/>
 		</form>		
                 <button id="update" onclick="updateTable()">Update</button>
                 <button id="clear" onclick="clearDatabase()">Clear</button>
