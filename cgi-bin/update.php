@@ -4,7 +4,7 @@
 
     $result = array();
 
-    $conn = sql_connect();
+    $conn = db_connect();
     if ($conn and $conn->connect_error) {
         die("Connection Failed: " . $conn->connect_error);
     }

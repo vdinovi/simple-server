@@ -11,7 +11,7 @@
         return;
     }
     # Attempt to connect, if successful delete user table.
-    $conn = sql_connect();
+    $conn = db_connect();
     if ($conn != FALSE && !$conn->connect_error) {
         mysqli_query($conn, "DELETE FROM users;");
         header("HTTP/1.1 200 OK");

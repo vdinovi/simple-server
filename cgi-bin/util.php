@@ -14,7 +14,7 @@
         return FALSE;
     }
 
-    function sql_connect() {
+    function db_connect() {
         $auth = authenticate();
         if ($auth) {
             return mysqli_connect($auth['server'], $auth['user'], $auth['passwd'], $auth['database']);

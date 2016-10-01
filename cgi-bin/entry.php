@@ -2,7 +2,7 @@
 <body>
 <?php
     include 'util.php';
-    $conn = sql_connect();
+    $conn = db_connect();
     if ($conn == FALSE or $conn->connect_error) {
         die("Connection Failed: " . $conn->connect_error);
     }
