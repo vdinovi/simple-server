@@ -22,19 +22,17 @@
             function clearDatabase() {
                 var password = prompt("This operation requires an administrator password.");
                 if (password != null) {
-                    console.log(password);
                     jQuery.ajax({
                         type:"POST",
                         url:'cgi-bin/clear.php',
                         dataType:'text',
-                        data: password,
+                        data: { passwd: password },
                         success: function (obj) {
                             console.log(obj);
                             updateTable();
                         },
                         error: function(xhr, ajaxOptions, err) {
                             console.log(xhr.responseText);
-                            alert(xhr.responseText);
                         }
                     });
                 }

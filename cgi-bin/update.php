@@ -1,10 +1,11 @@
 <?php
+    include 'util.php';
     header('Content-Type: application/json');
 
     $result = array();
-    # Connect
-    $conn = new mysqli('simpledb.db', 'simple_server_access', 'Vd12345!', 'simple_server');
-    if ($conn->connect_error) {
+
+    $conn = sql_connect();
+    if ($conn and $conn->connect_error) {
         die("Connection Failed: " . $conn->connect_error);
     }
     # Get entries

@@ -1,16 +1,11 @@
 <html>
 <body>
 <?php
-    $server= 'simpledb.db';
-    $user = 'simple_server_access';
-    $pass = 'Vd12345!';
-    $db = 'simple_server';
-
-    $conn = new mysqli($server, $user, $pass, $db);
-    if ($conn->connect_error) {
+    include 'util.php';
+    $conn = sql_connect();
+    if ($conn == FALSE or $conn->connect_error) {
         die("Connection Failed: " . $conn->connect_error);
     }
-
     $name = $_POST['name'];
     $email = $_POST['email'];
 
