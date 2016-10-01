@@ -7,7 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript">
-
             function updateTable() {
                 var table = "<tr><th>Name</th><th>Email</th></tr>";
                 jQuery.ajax({
@@ -22,7 +21,7 @@
                     }
                 });
             }
-            function clearDatabase() {
+            function clearUsers() {
                 var password = prompt("This operation requires an administrator password.");
                 if (password != null) {
                     jQuery.ajax({
@@ -52,7 +51,7 @@
 			<input id="submit" type="submit" style="display:inline-block";/>
 		</form>		
                 <button id="update" onclick="updateTable()">Update</button>
-                <button id="clear" onclick="clearDatabase()">Clear</button>
+                <button id="clear" onclick="clearUsers()">Clear</button>
         </div>
         <div style="width:600px">
             <table id="userTable"></table>

@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="chat.css"/>
+        <meta http-equiv="refresh" content="5">
+        <script>
+            function updateChat() {
+                var user, msg, media;
+                jQuery.ajax({
+                    type:"GET",
+                    url:"../cgi-bin/updateChat.php",
+                    dataType:'json',
+                    success: function(obj) {
+                        for (var key in obj) {
+                            switch(key) {
+                                case "user":
+                                    user = obj[key];
+                                    break;
+                                case "msg":
+                                    msg = obj[key];
+                                    break;
+                                case "media":
+                                    media = obj[key];
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        message = user + ":" + msg;
+                        console.log(message);
+                        $('#chatWindowBox').val($('#chatWindowBox').val() + '\n' + message);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div id="chatWindowDiv">
+            <textarea id="chatWindowBox" readonly></textarea>
+        </div>
+        <div id="inputDiv">
+            <form action="../cgi-bin/chat.php" method="post">
+                <input id="inputText" name="data"/>
+                <input type="submit" style="width:19.2%;;text-align:center;"/>
+            </form>
+        </div>
+    </body>
+</html>
