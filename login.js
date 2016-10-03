@@ -26,7 +26,10 @@ $(document).ready(function() {
             success: function(data) {
                 $(document).UID = data['UID'];
                 alert(data['msg']);
-            }
+            },
+	    error: function(data) {
+	        console.log(data['msg']);
+	    }
         });
         e.preventDefault();
     });

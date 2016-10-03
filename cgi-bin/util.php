@@ -8,7 +8,8 @@
     //    "database": "database"
     // }
     function db_auth() {
-        if ($authdata = file_get_contents("../../private/etc/db.conf", "r")) {
+        //if ($authdata = file_get_contents("../../private/etc/db.conf", "r")) {
+        if ($authdata = file_get_contents("../db.conf", "r")) {
             return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
         }
         return FALSE;
