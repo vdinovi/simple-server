@@ -9,9 +9,7 @@
     // }
     function db_auth() {
         if ($authdata = file_get_contents("../../protected/db.conf")) {
-        //if ($authdata = file_get_contents("../db.conf")) {
-            //return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
-            return json_decode($authdata, true);
+            return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
         }
         return FALSE;
     }
