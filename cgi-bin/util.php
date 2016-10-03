@@ -1,6 +1,6 @@
 <?php
 
-    // Create a json-formatted file called db.conf in $SERVER_ROOT/etc/
+    // Create a json-formatted file called db.conf in $SERVER_ROOT/private/etc/
     // {
     //    "server": "servername",
     //    "user": "username",
@@ -8,7 +8,7 @@
     //    "database": "database"
     // }
     function db_auth() {
-        if ($authdata = file_get_contents("../../etc/db.conf", "r")) {
+        if ($authdata = file_get_contents("../../private/etc/db.conf", "r")) {
             return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
         }
         return FALSE;
