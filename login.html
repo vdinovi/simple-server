@@ -6,44 +6,12 @@
         <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type="text/javascript">
-            function updateTable() {
-                var table = "<tr><th>Name</th><th>Email</th></tr>";
-                jQuery.ajax({
-                    type:"GET",
-                    url:'cgi-bin/update.php',
-                    dataType:'json',
-                    success: function(obj) {
-                        for (var key in obj) {
-                            table += "<tr><th>"+key+"</th><th>"+obj[key]+"</th></tr>";
-                        }
-                        $("#userTable").html(table); 
-                    }
-                });
-            }
-            function clearUsers() {
-                var password = prompt("This operation requires an administrator password.");
-                if (password != null) {
-                    jQuery.ajax({
-                        type:"POST",
-                        url:'cgi-bin/clear.php',
-                        dataType:'text',
-                        data: { passwd: password },
-                        success: function (obj) {
-                            console.log(obj);
-                            updateTable();
-                        },
-                        error: function(xhr, ajaxOptions, err) {
-                            console.log(xhr.responseText);
-                        }
-                    });
-                }
-            }
-        </script>
+        <script type="text/javascript" src="login.js"></script>
     </head>
-    <body onload="updateTable();">
-    	<div id="signin">
-		<form action="cgi-bin/entry.php" method="post">
+    <body>
+    	<div id="signup">
+                <h3>Sign Up</h3>
+		<form action="cgi-bin/signin.php" method="post">
 			Name:<br>
 			<input type="text" name="name"/><br>
 			Email:<br>
@@ -53,8 +21,17 @@
                 <button id="update" onclick="updateTable()">Update</button>
                 <button id="clear" onclick="clearUsers()">Clear</button>
         </div>
-        <div style="width:600px">
-            <table id="userTable"></table>
+        <div id="login">
+            <h3>Login</h3>
+		<form id="loginForm">
+			Name:<br>
+			<input type="text" name="name"/><br>
+			Email:<br>
+			<input type="text" name="passwd"/><br>
+			<input type="submit" style="display:inline-block";/>
+		</form>		
+                <button id="update" onclick="updateTable()">Update</button>
+                <button id="clear" onclick="clearUsers()">Clear</button>
         </div>
     </body>
 </html>

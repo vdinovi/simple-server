@@ -7,7 +7,7 @@
     //    "password": "password",
     //    "database": "database"
     // }
-    function authenticate() {
+    function db_auth() {
         if ($authdata = file_get_contents("../../etc/db.conf", "r")) {
             return json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
         }
@@ -15,11 +15,30 @@
     }
 
     function db_connect() {
-        $auth = authenticate();
+        $auth = db_auth();
         if ($auth) {
             return mysqli_connect($auth['server'], $auth['user'], $auth['passwd'], $auth['database']);
         }
         return FALSE;
+    }
+
+    function authenticate($usrname, $passwd) {
+        $result = array();
+    
+        $conn = db_connect();
+        if ($conn->connect_error) {
+            $result['error'] = 500;
+            return $result;
+        }
+        $query = "SELECT * FROM usr_auth WHERE usrname='$usrname';";
+        $usr = mysqli_fetch_assoc(mysqli_query($conn, $query));
+        if (!count($usr) || ($usr['passwd'] != $passwd)) {
+            $result['error'] = 400;
+        }
+        else {
+            $result['UID'] = $usr['UID'];
+        }
+        return $result;
     }
 ?>
 
