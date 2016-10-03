@@ -1,6 +1,6 @@
 <?php
     include 'util.php';
-    $usrname = $_POST['name'];
+    $usrname = $_POST['usrname'];
     $passwd = $_POST['passwd'];
     $usr = authenticate($usrname, $passwd);
     $result = array();

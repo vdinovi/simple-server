@@ -1,34 +1,41 @@
-<html>
-<body>
 <?php
     include 'util.php';
-    $conn = db_connect();
-    if ($conn == FALSE or $conn->connect_error) {
-        die("Connection Failed: " . $conn->connect_error);
-    }
-    $name = $_POST['name'];
-    $email = $_POST['email'];
+    header('Content-Type: application/json');
+    $usrname = $_POST['usrname'];
+    $passwd = $_POST['passwd'];
+    $result = array();
 
-    # Check if email has already been registered.
-    $query = "SELECT * FROM users WHERE email='$email';";
-    $result = mysqli_query($conn, $query);
-    if (mysqli_num_rows($result) != 0) {
-        echo "Email has already been registered.";
-    	echo "<br><a href='../login.html'>Return</a>";
-        return;
-    }
-
-    # Enter user into database    
-    $sqlfmt = "INSERT INTO users(name, email) VALUES('%s', '%s');";
-    $query = sprintf($sqlfmt, $name, $email);
-
-    if (!mysqli_query($conn, $query)) {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    $usr = authenticate($usrname, $pass);
+    if (array_key_exists('error', $usr)) {
+        $conn = db_connect();
+        if ($conn->connect_error) {
+            header("HTTP/1.1 500 Internal Server Error");
+            $result['msg'] = "Failed to connect to database";
+        }
+        else if($usr['error'] == 400) {
+            //$UID = substr(md5($usrname, true), 0, 12); 
+            $UID = 4;
+            $query = 
+                "INSERT INTO usr_auth(usrname, passwd, UID) VALUES('$usrname', '$passwd', $UID);";
+            if (!mysqli_query($conn, $query)) {
+                header("HTTP/1.1 500 Internal Server Error");
+                $result['msg'] = "Failed to enter user into database";
+            }
+            else {
+                header("HTTP/1.1 200 OK");
+                $result['msg'] = 
+                    "User account for " . $usrname . " created. Please log in to continue";    
+            }
+        }
+        else {
+            header("HTTP/1.1 500 Internal Server Error");
+            $result['msg'] = "Unknown failure";
+        }
     }
     else {
-        echo "Success!";
+        header("HTTP/1.1 409 Conflict");
+        $result['msg'] =
+            "User account for " . $usrname . " exists";
     }
-    echo "<br><a href='../login.html'>Return</a>";
+    echo json_encode($result);
 ?>
-</body>
-</html>

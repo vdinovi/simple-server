@@ -19,15 +19,31 @@ function clearUsers() {
 $(document).ready(function() {
     // login 
     $("#loginForm").submit(function(e) { 
-        console.log($("loginForm").serialize());
         $.ajax({
             type: 'post',
             url: 'cgi-bin/login.php',
-            datatype: "url",
             data: $("#loginForm").serialize(),
             success: function(data) {
-                $UID = data['UID'];
+                $(document).UID = data['UID'];
                 alert(data['msg']);
+            }
+        });
+        e.preventDefault();
+    });
+});
+
+$(document).ready(function() {
+    // signup
+    $("#signupForm").submit(function(e) { 
+        $.ajax({
+            type: 'post',
+            url: 'cgi-bin/signup.php',
+            data: $("#signupForm").serialize(),
+            success: function(data) {
+                alert(data['msg']);
+            },
+            error: function(data) {
+                console.log(data['msg']);
             }
         });
         e.preventDefault();
