@@ -24,7 +24,7 @@ $(document).ready(function() {
             url: 'cgi-bin/login.php',
             data: $("#loginForm").serialize(),
             success: function(data) {
-                $(document).UID = data['UID'];
+                //$(document).UID = data['UID'];
                 alert(data['msg']);
             },
 	    error: function(data) {
