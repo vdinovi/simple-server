@@ -8,7 +8,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="login.js"></script>
     </head>
-    <body>
+    <body onload="updateTable()">        
         <div>
             <h3>Sign Up</h3>
                 <form id="signupForm">
@@ -30,9 +30,9 @@
 		</form>		
         </div>
 	<div>
-		<table id="userTable">
+		<table align="center" id="userTable">
 		</table>
-		<button action="updateTable()">Update</button>
+		<button onclick="updateTable()">Update</button>
 	</div>
         <br><a href="index.html">Return to homepage</a>
     </body>

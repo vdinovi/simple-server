@@ -5,14 +5,15 @@
     $result = array();
 
     $conn = db_connect();
-    if ($conn and $conn->connect_error) {
+    if ($conn && $conn->connect_error) {
         die("Connection Failed: " . $conn->connect_error);
     }
+
     # Get entries
-    $entries = mysqli_query($conn, "SELECT * FROM users;");
+    $entries = mysqli_query($conn, "SELECT * FROM usr_auth;");
 
     while ($row = mysqli_fetch_assoc($entries)) {
-        $result[$row["name"]] = $row["email"];
+        array_push($result, $row['usrname']);
     }
     echo json_encode($result);
 ?>

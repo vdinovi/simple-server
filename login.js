@@ -16,6 +16,22 @@ function clearUsers() {
         });
     }
 }
+
+function updateTable() {
+    var table = "<tr align='center'><th>Online Users</th></tr>";
+    $.ajax({
+        type:"GET",
+        url:'cgi-bin/update.php',
+        dataType:'json',
+        success: function(obj) {
+            for (var key in obj) {
+                table += "<tr><th>"+obj[key]+"</th><th>";
+            }
+            $("#userTable").html(table); 
+        }
+    });
+}
+
 $(document).ready(function() {
     // login 
     $("#loginForm").submit(function(e) { 
@@ -24,12 +40,13 @@ $(document).ready(function() {
             url: 'cgi-bin/login.php',
             data: $("#loginForm").serialize(),
             success: function(data) {
-                //$(document).UID = data['UID'];
+                $UID = data['UID'];
                 alert(data['msg']);
             },
-	    error: function(data) {
-	        console.log(data['msg']);
-	    }
+            error: function(data) {
+                console.log(data);
+                alert(data['msg']);
+            }
         });
         e.preventDefault();
     });
@@ -46,7 +63,12 @@ $(document).ready(function() {
                 alert(data['msg']);
             },
             error: function(data) {
-                console.log(data['msg']);
+                if (data['status'] == '400') {
+                    alert("400 Authentication Failure");
+                }
+                else {
+                    alert("500 Internal Server Error");
+                }
             }
         });
         e.preventDefault();
