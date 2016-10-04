@@ -1,31 +1,12 @@
-function clearUsers() {
-    var password = prompt("This operation requires an administrator password.");
-    if (password != null) {
-        $.ajax({
-            type:"POST",
-            url:'cgi-bin/clear.php',
-            dataType:'text',
-            data: { passwd: password },
-            success: function (obj) {
-                console.log(obj);
-                updateTable();
-            },
-            error: function(xhr, ajaxOptions, err) {
-                console.log(xhr.responseText);
-            }
-        });
-    }
-}
-
 function updateTable() {
-    var table = "<tr align='center'><th>Online Users</th></tr>";
+    var table = "<tr><th>Online Users</th></tr>";
     $.ajax({
         type:"GET",
         url:'cgi-bin/update.php',
         dataType:'json',
         success: function(obj) {
             for (var key in obj) {
-                table += "<tr><th>"+obj[key]+"</th><th>";
+                table += "<tr font-weight:><th>"+obj[key]+"</th><th>";
             }
             $("#userTable").html(table); 
         }
@@ -42,6 +23,7 @@ $(document).ready(function() {
             success: function(data) {
                 $UID = data['UID'];
                 alert(data['msg']);
+                updateTable();
             },
             error: function(data) {
                 alert(data.responseJSON['msg']);
@@ -60,6 +42,7 @@ $(document).ready(function() {
             data: $("#signupForm").serialize(),
             success: function(data) {
                 alert(data['msg']);
+                updateTable();
             },
             error: function(data) {
                 alert(data.responseJSON['msg']);
