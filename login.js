@@ -1,5 +1,5 @@
 function updateTable() {
-    var table = "<tr><th>Online Users</th></tr>";
+    var table = "<tr><th><u>Online Users</u></th></tr>";
     $.ajax({
         type:"GET",
         url:'cgi-bin/update.php',
