@@ -30,6 +30,17 @@
         return FALSE;
     }
 
+    function does_user_exist($usrname) {
+        if ($conn = db_connect()) {
+            $query = "SELECT * FROM usr_auth WHERE usrname='$usrname';";
+            $usr = mysqli_query($conn, $query);
+            if ($usr->num_rows) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
     function authenticate($usrname, $passwd) {
         $result = array();
     

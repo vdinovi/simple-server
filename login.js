@@ -44,8 +44,7 @@ $(document).ready(function() {
                 alert(data['msg']);
             },
             error: function(data) {
-                console.log(data);
-                alert(data['msg']);
+                alert(data.responseJSON['msg']);
             }
         });
         e.preventDefault();
@@ -63,12 +62,7 @@ $(document).ready(function() {
                 alert(data['msg']);
             },
             error: function(data) {
-                if (data['status'] == '400') {
-                    alert("400 Authentication Failure");
-                }
-                else {
-                    alert("500 Internal Server Error");
-                }
+                alert(data.responseJSON['msg']);
             }
         });
         e.preventDefault();

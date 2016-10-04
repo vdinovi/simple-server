@@ -5,37 +5,30 @@
     $passwd = $_POST['passwd'];
     $result = array();
 
-    $usr = authenticate($usrname, $pass);
-    if (array_key_exists('error', $usr)) {
-        $conn = db_connect();
-        if ($conn->connect_error) {
-            header("HTTP/1.1 500 Internal Server Error");
-            $result['msg'] = "Failed to connect to database";
-        }
-        else if($usr['error'] == 400) {
-            //$UID = substr(md5($usrname, true), 0, 12); 
-            $UID = 4;
+    $usr_exists = does_user_exist($usrname);
+    if (!$usr_exists) {
+        if($usr['error'] = 400 && $conn = db_connect()) {
+            $UID = substr(md5($usrname, false), 0, 11); 
             $query = 
-                "INSERT INTO usr_auth(usrname, passwd, UID) VALUES('$usrname', '$passwd', $UID);";
+                "INSERT INTO usr_auth(usrname, passwd, UID) VALUES('$usrname', '$passwd', '$UID');";
             if (!mysqli_query($conn, $query)) {
                 header("HTTP/1.1 500 Internal Server Error");
-                $result['msg'] = "Failed to enter user into database";
+                $result['msg'] = "UID = $UID  Failed to enter user into database";
             }
             else {
                 header("HTTP/1.1 200 OK");
                 $result['msg'] = 
-                    "User account for " . $usrname . " created. Please log in to continue";    
+                    "User account for " . $usrname . " created. Please log in to continue";
             }
         }
         else {
             header("HTTP/1.1 500 Internal Server Error");
-            $result['msg'] = "Unknown failure";
+            $result['msg'] = "Unknown error";
         }
     }
     else {
         header("HTTP/1.1 409 Conflict");
-        $result['msg'] =
-            "User account for " . $usrname . " exists";
+        $result['msg'] =  "User account for " . $usrname . " exists";
     }
     echo json_encode($result);
 ?>
