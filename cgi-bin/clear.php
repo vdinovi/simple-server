@@ -1,19 +1,22 @@
 <?php
     include 'util.php';
-    if (!($auth = authenticate())) {
-        header("HTTP/1.1 500 Internal Server Error");
-        return;
-    } 
-    # Authentication failure
-    if ($auth['passwd'] != $_POST['passwd']) {
+    header("Content-Type: application/json");
+    $result = array();
+    if (db_cmp('simple_server_access', $_POST['passwd'])) {
         http_response_code(400);
         header("HTTP/1.1 400 Bad Request");
-        return;
+        $result['msg'] = "Failed to authenticate administrator";
     }
-    # Attempt to connect, if successful delete user table.
-    $conn = db_connect();
-    if ($conn != FALSE && !$conn->connect_error) {
-        mysqli_query($conn, "DELETE FROM users;");
-        header("HTTP/1.1 200 OK");
+    else {
+        $conn = db_connect();
+        if (!$conn->connect_error) {
+            mysqli_query($conn, "DELETE FROM usr_auth;");
+            header("HTTP/1.1 200 OK");
+        }
+        else {
+            header("HTTP/1.1 Internal Server Error");
+            $result['msg'] = "Error connecting to database";
+        }
     }
+    echo json_encode($result);
 ?>

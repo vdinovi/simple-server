@@ -13,6 +13,14 @@
         }
         return FALSE;
     }
+    
+    function db_cmp($usrname, $passwd) {
+        if ($authdata = file_get_contents("../../protected/db.conf")) {
+            $json_auth = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $authdata), true);
+            return $json_auth['password'] == $passwd && $json_auth['username'] == $usrname;
+        }
+        return FALSE;
+    }
 
     function db_connect() {
         $auth = db_auth();
